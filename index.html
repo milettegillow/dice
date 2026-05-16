@@ -1,3 +1,64 @@
 <!DOCTYPE html>
-<html><head><title>Dice</title></head>
-<body><h1>Coming soon</h1></body></html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <title>Dice</title>
+
+  <meta property="og:title" content="Dice" />
+  <meta property="og:description" content="A virtual dice roller. Shake your phone or tap to roll." />
+  <meta property="og:type" content="website" />
+  <meta name="description" content="A virtual dice roller. Shake your phone or tap to roll." />
+
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="0.9em" font-size="90">🎲</text></svg>' />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="velvet-noise" aria-hidden="true"></div>
+
+  <main class="app">
+    <section class="controls" aria-label="Dice controls">
+      <div class="pills" role="radiogroup" aria-label="Dice type">
+        <button class="pill" role="radio" aria-checked="false" data-sides="4">d4</button>
+        <button class="pill is-active" role="radio" aria-checked="true" data-sides="6">d6</button>
+        <button class="pill" role="radio" aria-checked="false" data-sides="8">d8</button>
+        <button class="pill" role="radio" aria-checked="false" data-sides="10">d10</button>
+        <button class="pill" role="radio" aria-checked="false" data-sides="12">d12</button>
+        <button class="pill" role="radio" aria-checked="false" data-sides="20">d20</button>
+      </div>
+
+      <div class="stepper" aria-label="Number of dice">
+        <button class="step" data-step="-1" aria-label="Decrease">−</button>
+        <span class="step-count" id="count" aria-live="polite">1</span>
+        <button class="step" data-step="1" aria-label="Increase">+</button>
+      </div>
+    </section>
+
+    <section class="arena" id="arena" aria-label="Dice arena">
+      <div class="result" id="result" aria-live="polite"></div>
+    </section>
+
+    <section class="trigger" aria-label="Roll">
+      <div class="shake-prompt" id="shakePrompt">Shake to roll</div>
+      <button class="roll-btn" id="rollBtn">Roll</button>
+    </section>
+  </main>
+
+  <div class="overlay" id="motionOverlay" hidden>
+    <div class="overlay-card">
+      <p class="overlay-text">Enable shake to roll?</p>
+      <div class="overlay-actions">
+        <button class="overlay-btn" id="motionDeny">No thanks</button>
+        <button class="overlay-btn primary" id="motionAllow">Enable</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>
