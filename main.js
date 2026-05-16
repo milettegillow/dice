@@ -30,7 +30,7 @@ const dice = new DiceBox({
   origin: "https://unpkg.com/@3d-dice/dice-box@1.1.4/dist/",
   theme: "default",
   themeColor: "#ede0c4",
-  scale: 5,
+  scale: 8,
   gravity: 1.4,
   mass: 1,
   friction: 0.8,

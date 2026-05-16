@@ -84,9 +84,11 @@ button {
   overflow-y: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  padding: 4px 2px;
+  padding: 4px 16px;
   scroll-snap-type: x proximity;
-  justify-content: center;
+  justify-content: safe center;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
 }
 .pills::-webkit-scrollbar {
   display: none;
@@ -174,7 +176,7 @@ button {
   flex: 1 1 auto;
   min-height: 0;
   width: 100%;
-  max-width: 380px;
+  max-width: 420px;
   aspect-ratio: 9 / 16;
   margin: 0 auto;
 }
