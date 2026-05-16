@@ -30,13 +30,16 @@ const dice = new DiceBox({
   id: "dice-canvas",
   assetPath: "assets/",
   origin: "https://unpkg.com/@3d-dice/dice-box@1.1.4/dist/",
-  theme: "default",
+  theme: "smooth",
   themeColor: "#ede0c4",
   scale: 11,
   gravity: 1.4,
   mass: 1,
   friction: 0.8,
   enableShadows: true,
+  externalThemes: {
+    smooth: "https://cdn.jsdelivr.net/gh/3d-dice/dice-themes@main/themes/smooth",
+  },
 });
 
 dice
