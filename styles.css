@@ -9,18 +9,27 @@
   --ink-dim: rgba(243, 233, 210, 0.65);
 }
 
+#result {
+  display: none !important;
+}
+
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
   overflow: hidden;
-  background: radial-gradient(ellipse at center, var(--bg-inner) 0%, var(--bg-outer) 75%);
+  background: radial-gradient(
+    ellipse at center,
+    var(--bg-inner) 0%,
+    var(--bg-outer) 75%
+  );
   color: var(--ink);
   font-family: "Playfair Display", Georgia, serif;
   user-select: none;
@@ -55,7 +64,8 @@ button {
   flex-direction: column;
   height: 100dvh;
   width: 100vw;
-  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 /* ---------- Controls ---------- */
@@ -78,7 +88,9 @@ button {
   scroll-snap-type: x proximity;
   justify-content: center;
 }
-.pills::-webkit-scrollbar { display: none; }
+.pills::-webkit-scrollbar {
+  display: none;
+}
 
 .pill {
   flex: 0 0 auto;
@@ -91,7 +103,11 @@ button {
   background: rgba(20, 4, 6, 0.4);
   border: 1px solid var(--gold-dim);
   border-radius: 999px;
-  transition: color 200ms ease, border-color 200ms ease, box-shadow 250ms ease, background 200ms ease;
+  transition:
+    color 200ms ease,
+    border-color 200ms ease,
+    box-shadow 250ms ease,
+    background 200ms ease;
   backdrop-filter: blur(4px);
 }
 
@@ -104,10 +120,14 @@ button {
   color: var(--gold);
   border-color: var(--gold);
   background: rgba(201, 169, 97, 0.08);
-  box-shadow: 0 0 0 1px var(--gold-dim), 0 0 18px var(--gold-glow);
+  box-shadow:
+    0 0 0 1px var(--gold-dim),
+    0 0 18px var(--gold-glow);
 }
 
-.pill:disabled, .step:disabled, .roll-btn:disabled {
+.pill:disabled,
+.step:disabled,
+.roll-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
@@ -128,7 +148,10 @@ button {
   font-size: 22px;
   line-height: 1;
   background: rgba(20, 4, 6, 0.4);
-  transition: border-color 200ms ease, box-shadow 250ms ease, color 200ms ease;
+  transition:
+    border-color 200ms ease,
+    box-shadow 250ms ease,
+    color 200ms ease;
 }
 
 .step:hover {
@@ -151,6 +174,9 @@ button {
   flex: 1 1 auto;
   min-height: 0;
   width: 100%;
+  max-width: 380px;
+  aspect-ratio: 9 / 16;
+  margin: 0 auto;
 }
 
 .arena canvas {
@@ -160,7 +186,10 @@ button {
 }
 
 /* dice-box sometimes renders a #dice-canvas wrapper */
-.arena > div { width: 100%; height: 100%; }
+.arena > div {
+  width: 100%;
+  height: 100%;
+}
 
 .result {
   position: absolute;
@@ -185,7 +214,9 @@ button {
   font-size: clamp(72px, 22vw, 180px);
   line-height: 1;
   color: var(--cream);
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6), 0 0 40px rgba(201, 169, 97, 0.15);
+  text-shadow:
+    0 2px 20px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(201, 169, 97, 0.15);
   letter-spacing: -0.02em;
 }
 
@@ -214,13 +245,20 @@ button {
   text-transform: uppercase;
   color: var(--gold);
   opacity: 0.9;
-  animation: gentleShake 2.4s ease-in-out infinite, softPulse 2.4s ease-in-out infinite;
+  animation:
+    gentleShake 2.4s ease-in-out infinite,
+    softPulse 2.4s ease-in-out infinite;
   transform-origin: center;
   display: none;
 }
 
-body.is-touch .shake-prompt { display: block; }
-body.is-touch .roll-btn { font-size: 13px; opacity: 0.7; }
+body.is-touch .shake-prompt {
+  display: block;
+}
+body.is-touch .roll-btn {
+  font-size: 13px;
+  opacity: 0.7;
+}
 
 .roll-btn {
   padding: 12px 34px;
@@ -232,7 +270,10 @@ body.is-touch .roll-btn { font-size: 13px; opacity: 0.7; }
   text-transform: uppercase;
   color: var(--gold);
   background: rgba(20, 4, 6, 0.45);
-  transition: color 200ms ease, background 200ms ease, box-shadow 250ms ease;
+  transition:
+    color 200ms ease,
+    background 200ms ease,
+    box-shadow 250ms ease;
   backdrop-filter: blur(4px);
 }
 
@@ -243,16 +284,32 @@ body.is-touch .roll-btn { font-size: 13px; opacity: 0.7; }
 }
 
 @keyframes gentleShake {
-  0%, 100% { transform: translateX(0) rotate(0); }
-  20% { transform: translateX(-2px) rotate(-0.4deg); }
-  40% { transform: translateX(2px) rotate(0.4deg); }
-  60% { transform: translateX(-1.5px) rotate(-0.3deg); }
-  80% { transform: translateX(1.5px) rotate(0.3deg); }
+  0%,
+  100% {
+    transform: translateX(0) rotate(0);
+  }
+  20% {
+    transform: translateX(-2px) rotate(-0.4deg);
+  }
+  40% {
+    transform: translateX(2px) rotate(0.4deg);
+  }
+  60% {
+    transform: translateX(-1.5px) rotate(-0.3deg);
+  }
+  80% {
+    transform: translateX(1.5px) rotate(0.3deg);
+  }
 }
 
 @keyframes softPulse {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 /* ---------- Overlay (iOS motion permission) ---------- */
@@ -268,7 +325,9 @@ body.is-touch .roll-btn { font-size: 13px; opacity: 0.7; }
   padding: 24px;
 }
 
-.overlay[hidden] { display: none; }
+.overlay[hidden] {
+  display: none;
+}
 
 .overlay-card {
   background: rgba(28, 6, 10, 0.95);
@@ -303,7 +362,10 @@ body.is-touch .roll-btn { font-size: 13px; opacity: 0.7; }
   text-transform: uppercase;
   font-family: "Playfair Display", Georgia, serif;
   background: transparent;
-  transition: color 200ms ease, border-color 200ms ease, box-shadow 250ms ease;
+  transition:
+    color 200ms ease,
+    border-color 200ms ease,
+    box-shadow 250ms ease;
 }
 
 .overlay-btn.primary {

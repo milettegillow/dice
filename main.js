@@ -30,7 +30,7 @@ const dice = new DiceBox({
   origin: "https://unpkg.com/@3d-dice/dice-box@1.1.4/dist/",
   theme: "default",
   themeColor: "#ede0c4",
-  scale: 7,
+  scale: 5,
   gravity: 1.4,
   mass: 1,
   friction: 0.8,
@@ -41,6 +41,7 @@ dice
   .init()
   .then(() => {
     state.ready = true;
+    dice.roll(`${state.count}d${state.sides}`);
   })
   .catch((err) => {
     console.error("DiceBox init failed", err);
@@ -118,8 +119,7 @@ async function triggerRoll() {
 
   try {
     const notation = `${state.count}d${state.sides}`;
-    const results = await dice.roll(notation);
-    showResult(results);
+    await dice.roll(notation, { newStartPoint: false });
   } catch (err) {
     console.error("Roll failed", err);
   } finally {
