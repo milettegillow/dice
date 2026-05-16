@@ -30,18 +30,28 @@ const dice = new DiceBox({
   origin: "https://unpkg.com/@3d-dice/dice-box@1.1.4/dist/",
   theme: "default",
   themeColor: "#ede0c4",
-  scale: 8,
+  scale: 11,
   gravity: 1.4,
   mass: 1,
   friction: 0.8,
   enableShadows: true,
+  externalThemes: {
+    smooth: "https://cdn.jsdelivr.net/gh/3d-dice/dice-themes@main/themes/smooth",
+    "smooth-pip":
+      "https://cdn.jsdelivr.net/gh/3d-dice/dice-themes@main/themes/smooth-pip",
+  },
+  preloadThemes: ["smooth-pip"],
 });
+
+function themeFor(sides) {
+  return sides === 6 ? "smooth" : "default";
+}
 
 dice
   .init()
   .then(() => {
     state.ready = true;
-    dice.roll(`${state.count}d${state.sides}`);
+    dice.roll(`${state.count}d${state.sides}`, { theme: themeFor(state.sides) });
   })
   .catch((err) => {
     console.error("DiceBox init failed", err);
@@ -119,7 +129,10 @@ async function triggerRoll() {
 
   try {
     const notation = `${state.count}d${state.sides}`;
-    await dice.roll(notation, { newStartPoint: false });
+    await dice.roll(notation, {
+      theme: themeFor(state.sides),
+      newStartPoint: false,
+    });
   } catch (err) {
     console.error("Roll failed", err);
   } finally {

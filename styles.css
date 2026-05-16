@@ -86,12 +86,18 @@ button {
   -ms-overflow-style: none;
   padding: 4px 16px;
   scroll-snap-type: x proximity;
-  justify-content: safe center;
+  justify-content: flex-start;
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
 }
 .pills::-webkit-scrollbar {
   display: none;
+}
+
+@media (min-width: 600px) {
+  .pills {
+    justify-content: center;
+  }
 }
 
 .pill {
