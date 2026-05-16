@@ -1,5 +1,7 @@
 import DiceBox from "https://unpkg.com/@3d-dice/dice-box@1.1.4/dist/dice-box.es.min.js";
 
+const MAX_DICE = 4;
+
 const state = {
   sides: 6,
   count: 1,
@@ -13,7 +15,6 @@ const els = {
   count: document.getElementById("count"),
   rollBtn: document.getElementById("rollBtn"),
   arena: document.getElementById("arena"),
-  result: document.getElementById("result"),
   motionOverlay: document.getElementById("motionOverlay"),
   motionAllow: document.getElementById("motionAllow"),
   motionDeny: document.getElementById("motionDeny"),
@@ -23,6 +24,7 @@ const isTouch =
   window.matchMedia("(pointer: coarse)").matches || "ontouchstart" in window;
 if (isTouch) document.body.classList.add("is-touch");
 
+// TODO: Episode 2 polish — pip-faced d6 via local-hosted smooth-pip theme
 const dice = new DiceBox({
   container: "#arena",
   id: "dice-canvas",
@@ -35,23 +37,13 @@ const dice = new DiceBox({
   mass: 1,
   friction: 0.8,
   enableShadows: true,
-  externalThemes: {
-    smooth: "https://cdn.jsdelivr.net/gh/3d-dice/dice-themes@main/themes/smooth",
-    "smooth-pip":
-      "https://cdn.jsdelivr.net/gh/3d-dice/dice-themes@main/themes/smooth-pip",
-  },
-  preloadThemes: ["smooth-pip"],
 });
-
-function themeFor(sides) {
-  return sides === 6 ? "smooth" : "default";
-}
 
 dice
   .init()
   .then(() => {
     state.ready = true;
-    dice.roll(`${state.count}d${state.sides}`, { theme: themeFor(state.sides) });
+    dice.roll(`${state.count}d${state.sides}`);
   })
   .catch((err) => {
     console.error("DiceBox init failed", err);
@@ -74,7 +66,7 @@ els.steps.forEach((step) => {
   step.addEventListener("click", () => {
     if (state.rolling) return;
     const delta = Number(step.dataset.step);
-    state.count = Math.min(4, Math.max(1, state.count + delta));
+    state.count = Math.min(MAX_DICE, Math.max(1, state.count + delta));
     els.count.textContent = state.count;
   });
 });
@@ -103,36 +95,16 @@ function setControlsDisabled(disabled) {
   els.rollBtn.disabled = disabled;
 }
 
-function showResult(results) {
-  const values = results.map((r) => r.value);
-  const total = values.reduce((a, b) => a + b, 0);
-  els.result.innerHTML = `
-    <div class="total">${total}</div>
-    ${values.length > 1 ? `<div class="breakdown">${values.join(" · ")}</div>` : ""}
-  `;
-  // Force reflow then add visible class so transition runs
-  void els.result.offsetWidth;
-  els.result.classList.add("is-visible");
-}
-
-function clearResult() {
-  els.result.classList.remove("is-visible");
-}
-
 async function triggerRoll() {
   if (state.rolling || !state.ready) return;
   state.rolling = true;
   setControlsDisabled(true);
-  clearResult();
 
   playDiceSound(state.count);
 
   try {
     const notation = `${state.count}d${state.sides}`;
-    await dice.roll(notation, {
-      theme: themeFor(state.sides),
-      newStartPoint: false,
-    });
+    await dice.roll(notation, { newStartPoint: false });
   } catch (err) {
     console.error("Roll failed", err);
   } finally {
