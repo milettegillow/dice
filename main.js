@@ -46,11 +46,40 @@ dice
   .init()
   .then(() => {
     state.ready = true;
+    applyRetinaFix();
     dice.roll(`${state.count}d${state.sides}`);
   })
   .catch((err) => {
     console.error("DiceBox init failed", err);
   });
+
+// dice-box reads canvas.clientWidth/Height to size its render target and ships
+// those values (CSS px) to its internal world. On Retina/HiDPI displays that
+// produces a framebuffer at CSS-px resolution — soft/blurry dice. Shadow the
+// two getters on this canvas instance so dice-box transmits DPR-scaled values
+// to the world; CSS `width/height: 100% !important` keeps the display size
+// pinned to the arena, so only the internal framebuffer grows.
+function applyRetinaFix() {
+  const canvas = els.arena.querySelector("canvas");
+  if (!canvas) return;
+  const dpr = window.devicePixelRatio || 1;
+  if (dpr <= 1) return;
+
+  Object.defineProperty(canvas, "clientWidth", {
+    configurable: true,
+    get() {
+      return Math.round(this.offsetWidth * dpr);
+    },
+  });
+  Object.defineProperty(canvas, "clientHeight", {
+    configurable: true,
+    get() {
+      return Math.round(this.offsetHeight * dpr);
+    },
+  });
+
+  dice.resizeWorld?.();
+}
 
 /* ---------- Controls ---------- */
 els.pills.forEach((pill) => {
